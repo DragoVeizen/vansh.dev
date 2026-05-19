@@ -4,14 +4,29 @@ import matter from "gray-matter";
 
 const POSTS_DIR = path.join(process.cwd(), "src/content/writing");
 
+export type PostCategory = "technical" | "case-study" | "fun";
+
+export const POST_CATEGORY_LABEL: Record<PostCategory, string> = {
+  technical: "Technical",
+  "case-study": "Case Study",
+  fun: "Fun",
+};
+
 export type PostMeta = {
   slug: string;
   title: string;
   date: string;
   excerpt: string;
+  category: PostCategory;
 };
 
 export type Post = PostMeta & { content: string };
+
+function normalizeCategory(value: unknown): PostCategory {
+  const v = String(value ?? "").toLowerCase().replace(/_/g, "-");
+  if (v === "technical" || v === "case-study" || v === "fun") return v;
+  return "technical";
+}
 
 export async function getAllPosts(): Promise<PostMeta[]> {
   const files = await fs.readdir(POSTS_DIR);
@@ -26,6 +41,7 @@ export async function getAllPosts(): Promise<PostMeta[]> {
         title: String(data.title ?? slug),
         date: String(data.date ?? ""),
         excerpt: String(data.excerpt ?? ""),
+        category: normalizeCategory(data.category),
       };
     })
   );
@@ -41,6 +57,7 @@ export async function getPost(slug: string): Promise<Post | null> {
       title: String(data.title ?? slug),
       date: String(data.date ?? ""),
       excerpt: String(data.excerpt ?? ""),
+      category: normalizeCategory(data.category),
       content,
     };
   } catch {

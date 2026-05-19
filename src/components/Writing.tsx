@@ -1,7 +1,23 @@
+import type { ReactNode } from "react";
 import { Card } from "@/components/Card";
 import { Section } from "@/components/Section";
-import { DiamondIcon, TerminalIcon } from "@/components/icons";
-import { formatPostDate, getAllPosts } from "@/lib/posts";
+import {
+  AsteriskIcon,
+  DiamondIcon,
+  PipelineIcon,
+} from "@/components/icons";
+import {
+  formatPostDate,
+  getAllPosts,
+  POST_CATEGORY_LABEL,
+  type PostCategory,
+} from "@/lib/posts";
+
+const categoryIcon: Record<PostCategory, ReactNode> = {
+  technical: <PipelineIcon className="h-5 w-5" />,
+  "case-study": <DiamondIcon className="h-5 w-5" />,
+  fun: <AsteriskIcon className="h-5 w-5" />,
+};
 
 export async function Writing() {
   const posts = await getAllPosts();
@@ -13,8 +29,8 @@ export async function Writing() {
           <li key={p.slug}>
             <Card
               href={`/writing/${p.slug}`}
-              icon={<TerminalIcon className="h-5 w-5" />}
-              label={formatPostDate(p.date)}
+              icon={categoryIcon[p.category]}
+              label={`${POST_CATEGORY_LABEL[p.category]} · ${formatPostDate(p.date)}`}
               title={p.title}
               description={p.excerpt}
             />
@@ -23,7 +39,7 @@ export async function Writing() {
         <li>
           <Card
             icon={<DiamondIcon className="h-5 w-5" />}
-            label="Upcoming · May 2026"
+            label="Case Study · Upcoming"
             title="Rebuilding Hudle's payment pipeline without downtime"
             description="A 9-table entity split, dual-write, and middleware-rebinding — how we replaced a monolithic payment schema in production with feature flags and zero customer impact."
           />

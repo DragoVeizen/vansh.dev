@@ -2,7 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { formatPostDate, getAllPosts, getPost } from "@/lib/posts";
+import {
+  formatPostDate,
+  getAllPosts,
+  getPost,
+  POST_CATEGORY_LABEL,
+} from "@/lib/posts";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -37,9 +42,10 @@ export default async function PostPage({ params }: Props) {
       </Link>
 
       <article className="mt-16">
-        <time className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
-          {formatPostDate(post.date)}
-        </time>
+        <div className="font-mono text-[11px] uppercase tracking-[0.22em]">
+          <span className="text-accent">{POST_CATEGORY_LABEL[post.category]}</span>
+          <span className="text-dim"> · {formatPostDate(post.date)}</span>
+        </div>
         <h1 className="mt-3 text-4xl font-bold leading-[1.1] tracking-[-0.02em] text-fg-strong sm:text-5xl">
           {post.title}
         </h1>

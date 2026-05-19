@@ -109,3 +109,14 @@ export function DiamondIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function AsteriskIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...geo} className={className} aria-hidden>
+      <line x1="12" y1="3" x2="12" y2="21" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="5.4" y1="5.4" x2="18.6" y2="18.6" />
+      <line x1="5.4" y1="18.6" x2="18.6" y2="5.4" />
+    </svg>
+  );
+}

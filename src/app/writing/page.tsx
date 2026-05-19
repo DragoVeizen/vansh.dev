@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { formatPostDate, getAllPosts } from "@/lib/posts";
+import {
+  formatPostDate,
+  getAllPosts,
+  POST_CATEGORY_LABEL,
+} from "@/lib/posts";
 
 export const metadata = { title: "Writing" };
 
@@ -23,9 +27,12 @@ export default async function WritingIndex() {
           {posts.map((p) => (
             <li key={p.slug}>
               <Link href={`/writing/${p.slug}`} className="group block">
-                <time className="font-mono text-[11px] uppercase tracking-[0.22em] text-dim">
-                  {formatPostDate(p.date)}
-                </time>
+                <div className="font-mono text-[11px] uppercase tracking-[0.22em]">
+                  <span className="text-accent">
+                    {POST_CATEGORY_LABEL[p.category]}
+                  </span>
+                  <span className="text-dim"> · {formatPostDate(p.date)}</span>
+                </div>
                 <h2 className="mt-2 text-2xl font-medium leading-tight text-fg-strong transition-colors group-hover:text-accent">
                   {p.title}
                 </h2>
