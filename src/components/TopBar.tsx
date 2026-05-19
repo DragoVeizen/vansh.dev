@@ -4,6 +4,7 @@
 // and the ✦ mode toggle on the right. Server component — the only
 // client part is <ModeToggle/>.
 
+import Link from "next/link";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Wordmark } from "@/components/Wordmark";
 
@@ -14,13 +15,13 @@ export function TopBar() {
       className="sticky top-0 z-30 border-b border-rule/60 bg-bg/80 backdrop-blur"
     >
       <div className="mx-auto flex h-12 max-w-screen-xl items-center justify-between px-6 md:px-12 lg:px-24">
-        <a
+        <Link
           href="/"
           aria-label="vansh.dev — home"
           className="transition-opacity hover:opacity-80"
         >
           <Wordmark />
-        </a>
+        </Link>
         <ModeToggle />
       </div>
     </header>
