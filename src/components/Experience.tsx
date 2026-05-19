@@ -2,12 +2,22 @@ import { Section } from "@/components/Section";
 import { Tag } from "@/components/Tag";
 import { experience, type ExperienceItem } from "@/data/experience";
 
-function ExperienceEntry({ entry }: { entry: ExperienceItem }) {
+function ExperienceEntry({
+  entry,
+  isCurrent,
+}: {
+  entry: ExperienceItem;
+  isCurrent: boolean;
+}) {
   return (
-    <article className="relative pl-6">
+    <article className="relative pl-7">
       <span
         aria-hidden
-        className="absolute left-[-4.5px] top-2 h-2 w-2 rounded-full bg-rule ring-4 ring-bg transition-colors"
+        className={
+          isCurrent
+            ? "absolute -left-[4px] top-2 h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-bg shadow-[0_0_14px_var(--color-accent)]"
+            : "absolute -left-[2px] top-[10px] h-1.5 w-1.5 rounded-full bg-rule ring-4 ring-bg"
+        }
       />
       <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-dim">
         {entry.dateRange}
@@ -51,10 +61,21 @@ function ExperienceEntry({ entry }: { entry: ExperienceItem }) {
 export function Experience() {
   return (
     <Section id="experience" label="Experience">
-      <ol className="relative border-l border-rule">
+      <ol className="group/list relative">
+        <span
+          aria-hidden
+          className="absolute left-0 top-1 h-[calc(100%-0.5rem)] w-px bg-gradient-to-b from-accent/50 via-rule to-rule"
+        />
         {experience.map((entry, idx) => (
-          <li key={entry.company + entry.dateRange} className={idx > 0 ? "mt-14" : ""}>
-            <ExperienceEntry entry={entry} />
+          <li
+            key={entry.company + entry.dateRange}
+            className={[
+              idx > 0 ? "mt-14" : "",
+              "transition-opacity duration-200",
+              "lg:group-hover/list:opacity-50 lg:hover:opacity-100",
+            ].join(" ")}
+          >
+            <ExperienceEntry entry={entry} isCurrent={idx === 0} />
           </li>
         ))}
       </ol>

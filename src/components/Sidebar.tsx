@@ -6,7 +6,7 @@ export function Sidebar() {
   return (
     <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
       <div>
-        <h1 className="text-4xl font-bold tracking-tight text-fg-strong sm:text-5xl">
+        <h1 className="text-4xl font-bold leading-[1.05] tracking-[-0.025em] text-fg-strong sm:text-5xl">
           {site.name}
         </h1>
         <h2 className="mt-3 text-base font-medium tracking-tight text-fg sm:text-lg">

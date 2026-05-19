@@ -12,46 +12,49 @@ function ProjectCard({ project }: { project: ProjectItem }) {
     </span>
   );
   return (
-    <li className="group">
-      <article>
-        {project.status && (
-          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-dim">
-            {project.status}
-          </span>
+    <article>
+      {project.status && (
+        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-dim">
+          {project.status}
+        </span>
+      )}
+      <h3 className="mt-1 text-base font-medium leading-snug text-fg-strong">
+        {project.url ? (
+          <a
+            href={project.url}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noreferrer" : undefined}
+            className="transition-colors hover:text-accent focus-visible:text-accent"
+          >
+            {Title}
+          </a>
+        ) : (
+          Title
         )}
-        <h3 className="mt-1 text-base font-medium leading-snug text-fg-strong">
-          {project.url ? (
-            <a
-              href={project.url}
-              target={isExternal ? "_blank" : undefined}
-              rel={isExternal ? "noreferrer" : undefined}
-              className="transition-colors hover:text-accent focus-visible:text-accent"
-            >
-              {Title}
-            </a>
-          ) : (
-            Title
-          )}
-        </h3>
-        <p className="mt-2 text-sm leading-relaxed text-muted">{project.description}</p>
-        {project.tags && project.tags.length > 0 && (
-          <ul className="mt-4 flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
-          </ul>
-        )}
-      </article>
-    </li>
+      </h3>
+      <p className="mt-2 text-sm leading-relaxed text-muted">{project.description}</p>
+      {project.tags && project.tags.length > 0 && (
+        <ul className="mt-4 flex flex-wrap gap-1.5">
+          {project.tags.map((tag) => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+        </ul>
+      )}
+    </article>
   );
 }
 
 export function Projects() {
   return (
     <Section id="projects" label="Projects">
-      <ol className="space-y-12">
+      <ol className="group/projects space-y-12">
         {projects.map((project) => (
-          <ProjectCard key={project.title} project={project} />
+          <li
+            key={project.title}
+            className="transition-opacity duration-200 lg:group-hover/projects:opacity-50 lg:hover:opacity-100"
+          >
+            <ProjectCard project={project} />
+          </li>
         ))}
       </ol>
     </Section>
