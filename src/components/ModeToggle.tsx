@@ -4,11 +4,17 @@
 //
 // The ✦ button. Single client component for the whole feature.
 //
-// On mount: reads <html data-mode> (the init script set it pre-paint).
 // On click: flips mode, writes localStorage, updates URL via
 // history.replaceState (no history entry — back button stays clean).
+//
+// Initial state: read once from <html data-mode> via the useState
+// initializer. The init script in <head> set the attribute pre-paint,
+// so this read is the same value the user is already seeing. We don't
+// use useEffect+setState here because React 19's
+// react-hooks/set-state-in-effect rule discourages it, and the
+// initializer pattern is functionally equivalent (one read, no flicker).
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   MODE_QUERY_PARAM,
   MODE_STORAGE_KEY,
@@ -16,15 +22,15 @@ import {
   type Mode,
 } from "@/lib/mode";
 
-export function ModeToggle() {
-  const [mode, setMode] = useState<Mode>("recruiter");
+function readInitialMode(): Mode {
+  // Server: no DOM, default recruiter.
+  if (typeof document === "undefined") return "recruiter";
+  const v = document.documentElement.dataset.mode;
+  return isValidMode(v) ? v : "recruiter";
+}
 
-  // Read the mode the init script already set. Doing this in an effect
-  // (vs reading during render) keeps SSR markup deterministic.
-  useEffect(() => {
-    const v = document.documentElement.dataset.mode;
-    if (isValidMode(v)) setMode(v);
-  }, []);
+export function ModeToggle() {
+  const [mode, setMode] = useState<Mode>(readInitialMode);
 
   function flip() {
     const next: Mode = mode === "play" ? "recruiter" : "play";
