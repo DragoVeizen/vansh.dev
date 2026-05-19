@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { Card } from "@/components/Card";
-import { Section } from "@/components/Section";
 import {
   AsteriskIcon,
   DiamondIcon,
@@ -13,6 +12,10 @@ import {
   type PostCategory,
 } from "@/lib/posts";
 
+// Bypasses <Section> so we can dual-render the visible heading
+// ("Writing" / "Notes") while keeping section chrome stable.
+// If Section.tsx ever changes, keep this section's chrome in sync.
+
 const categoryIcon: Record<PostCategory, ReactNode> = {
   technical: <PipelineIcon className="h-5 w-5" />,
   "case-study": <DiamondIcon className="h-5 w-5" />,
@@ -23,10 +26,21 @@ export async function Writing() {
   const posts = await getAllPosts();
 
   return (
-    <Section id="writing" label="Writing">
+    <section
+      id="writing"
+      aria-label="Writing"
+      className="scroll-mt-16 py-16 first:pt-0 lg:py-20 lg:scroll-mt-24"
+    >
+      <div className="sticky top-0 z-20 -mx-6 mb-10 bg-bg/80 px-6 py-4 backdrop-blur md:-mx-12 md:px-12 lg:static lg:mx-0 lg:mb-8 lg:bg-transparent lg:px-0 lg:py-0 lg:backdrop-blur-none">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+          <span className="recruiter-only">Writing</span>
+          <span className="play-only">Notes</span>
+        </h2>
+      </div>
+
       <ul className="grid grid-cols-1 gap-4">
         {posts.map((p) => (
-          <li key={p.slug}>
+          <li key={p.slug} data-post-category={p.category}>
             <Card
               href={`/writing/${p.slug}`}
               icon={categoryIcon[p.category]}
@@ -36,7 +50,7 @@ export async function Writing() {
             />
           </li>
         ))}
-        <li>
+        <li className="recruiter-only">
           <Card
             icon={<DiamondIcon className="h-5 w-5" />}
             label="Case Study · Upcoming"
@@ -45,6 +59,6 @@ export async function Writing() {
           />
         </li>
       </ul>
-    </Section>
+    </section>
   );
 }
