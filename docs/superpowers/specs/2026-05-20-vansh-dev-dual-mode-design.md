@@ -37,7 +37,7 @@ This is **Phase 1 only**. Phase 2 (Now / Reading / Shelf data surfaces, auto-der
 - Sticky top bar component across both modes: wordmark `vansh.dev` (left) + ✦ toggle (right).
 - Sidebar updated with mode-aware content (name, subtitle, tagline, in-page nav, status line, socials).
 - Mode state: `recruiter` (default) and `play`. Stored in `localStorage`; first visit always `recruiter`; URL `?mode=play` opens directly into personality.
-- Visual flip via CSS attribute selectors on `<html data-mode="play">`: accent shift (amber → rose), italic-serif on the sidebar h1 in play mode, micro-copy swaps. Same layout, same typography otherwise.
+- Visual flip via CSS attribute selectors on `<html data-mode="play">`: accent shift (amber → mint teal), italic-serif on the sidebar h1 in play mode, micro-copy swaps. Same layout, same typography otherwise.
 - Writing component gains a category filter via CSS — recruiter mode hides `fun` posts, play mode shows only `fun` (renamed **Notes** in personality).
 - **Sections rendered in personality mode (Phase 1):** About + Notes (filtered Writing). Experience and Projects are hidden via CSS in play mode.
 
@@ -152,9 +152,9 @@ Everything below is driven by `<html data-mode="play">` swapping CSS custom prop
 
 | Token | Recruiter | Play |
 |---|---|---|
-| `--color-accent` | `#f59e0b` *(current amber)* | `#e07ab2` *(warm rose)* |
-| `--color-accent-soft` | `rgba(245, 158, 11, 0.15)` | `rgba(224, 122, 178, 0.15)` |
-| Ambient body gradient | amber rgba blobs *(current values)* | rose rgba blobs *(same gradient, recolored)* |
+| `--color-accent` | `#f59e0b` *(current amber)* | `#71d0a8` *(monkeytype-style mint teal)* |
+| `--color-accent-soft` | `rgba(245, 158, 11, 0.15)` | `rgba(113, 208, 168, 0.15)` |
+| Ambient body gradient | amber rgba blobs *(current values)* | mint teal rgba blobs *(same gradient, recolored)* |
 
 Implementation note: the body gradient is currently hard-coded with amber rgba in `globals.css`. Rebuild the gradient using `color-mix(in srgb, var(--color-accent) X%, transparent)` so it retints automatically with the accent token. `color-mix()` is baseline (Safari 16.2+, Chrome 111+, Firefox 113+); browser support is not a concern in 2026. The Risks section retains a fallback path if it ever becomes one.
 
@@ -184,7 +184,7 @@ Serif appears in exactly two places: top-bar `.dev` (always, both modes — edit
 
 ### Post-page inheritance rule
 
-Decision: post pages (`/writing/<slug>`) inherit the global mode. A technical post viewed while play mode is active will show rose-accent links + rose inline-code background. Consistency across the site beats consistency per-post-category.
+Decision: post pages (`/writing/<slug>`) inherit the global mode. A technical post viewed while play mode is active will show mint-teal-accent links + mint-teal inline-code background. Consistency across the site beats consistency per-post-category.
 
 ---
 
@@ -245,7 +245,7 @@ Avoids hydration flicker, avoids mode-aware React components, keeps the recruite
 
 ### Flow 2 — Visitor clicks ✦
 
-1. 250ms color transition: accent amber → rose, ambient gradient retints.
+1. 250ms color transition: accent amber → mint teal, ambient gradient retints.
 2. Sidebar h1 cross-fades: **Vansh Thakur** → *vansh*.
 3. Subtitle → *off-duty · Delhi*. Tagline → play version. Nav collapses to About · Notes. Status → `● rereading "Tidy First?"`.
 4. Main column: Experience + Projects hidden via CSS. Writing retitles to **Notes**, hides non-fun posts.
@@ -257,7 +257,7 @@ Same as Flow 2's end state, but no animation — init script sets `data-mode="pl
 
 ### Flow 4 — Visitor clicks a Notes post while in play mode
 
-Navigates to `/writing/<slug>`. The post page inherits `data-mode="play"`. Post body shows rose-accent links + rose inline-code background. ✦ stays in the top bar; clicking it flips the post page to recruiter palette.
+Navigates to `/writing/<slug>`. The post page inherits `data-mode="play"`. Post body shows mint-teal-accent links + mint-teal inline-code background. ✦ stays in the top bar; clicking it flips the post page to recruiter palette.
 
 ### Flow 5 — Returning visitor who previously clicked ✦
 
