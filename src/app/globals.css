@@ -14,6 +14,37 @@
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: ui-serif, "New York", Georgia, serif;
+}
+
+/* Play-mode accent override. Mode is set on <html> by the init script
+   in src/components/ModeInitScript.tsx before paint, so the rest of
+   the site retints automatically (anything that consumes --color-accent
+   or --color-accent-soft). */
+:root[data-mode="play"] {
+  --color-accent: #71d0a8;
+  --color-accent-soft: rgba(113, 208, 168, 0.15);
+}
+
+/* Smooth the accent shift when the user clicks ✦. We only transition
+   color-related properties — layout properties stay snappy. */
+:root,
+:root *,
+:root *::before,
+:root *::after {
+  transition-property: color, background-color, border-color, fill, stroke, box-shadow;
+  transition-duration: 250ms;
+  transition-timing-function: ease;
+}
+
+/* Respect motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  :root,
+  :root *,
+  :root *::before,
+  :root *::after {
+    transition-duration: 0ms !important;
+  }
 }
 
 html {
@@ -25,9 +56,15 @@ body {
   font-family: var(--font-sans);
   font-feature-settings: "ss01", "ss02", "cv11";
   -webkit-font-smoothing: antialiased;
+  /* Gradient retints with --color-accent via color-mix.
+     color-mix is baseline in 2026 (Safari 16.2+, Chrome 111+, FF 113+). */
   background-image:
-    radial-gradient(ellipse 80% 50% at 0% 0%, rgba(245, 158, 11, 0.045), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(245, 158, 11, 0.025), transparent 55%);
+    radial-gradient(ellipse 80% 50% at 0% 0%,
+      color-mix(in srgb, var(--color-accent) 4.5%, transparent),
+      transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%,
+      color-mix(in srgb, var(--color-accent) 2.5%, transparent),
+      transparent 55%);
   background-attachment: fixed;
 }
 
@@ -113,4 +150,32 @@ button:focus-visible {
 
 .post-prose strong {
   font-weight: 600;
+}
+
+/* -------------------------------------------------------------- */
+/* Mode-aware visibility utilities.                                */
+/* -------------------------------------------------------------- */
+
+/* Hide play-only nodes by default. They become visible when
+   <html data-mode="play"> is set. */
+.play-only {
+  display: none;
+}
+:root[data-mode="play"] .play-only {
+  display: revert;
+}
+
+/* Hide recruiter-only nodes when in play mode. */
+:root[data-mode="play"] .recruiter-only {
+  display: none;
+}
+
+/* Post-category filter, scoped to the homepage Writing section.
+   The /writing index and individual post pages do NOT use
+   data-post-category, so they remain unfiltered (per spec). */
+:root:not([data-mode="play"]) [data-post-category="fun"] {
+  display: none;
+}
+:root[data-mode="play"] [data-post-category]:not([data-post-category="fun"]) {
+  display: none;
 }
