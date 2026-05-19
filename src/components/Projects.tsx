@@ -1,62 +1,52 @@
+import type { ReactNode } from "react";
+import { Card } from "@/components/Card";
 import { Section } from "@/components/Section";
 import { Tag } from "@/components/Tag";
-import { ArrowOutIcon } from "@/components/icons";
-import { projects, type ProjectItem } from "@/data/projects";
+import {
+  DiamondIcon,
+  GridIcon,
+  PipelineIcon,
+  PulseIcon,
+  TerminalIcon,
+} from "@/components/icons";
+import { projects, type ProjectIconKey } from "@/data/projects";
 
-function ProjectCard({ project }: { project: ProjectItem }) {
-  const isExternal = !!project.url?.startsWith("http");
-  const Title = (
-    <span className="inline-flex items-baseline gap-1.5">
-      <span>{project.title}</span>
-      {isExternal && <ArrowOutIcon className="h-3 w-3 translate-y-px" />}
-    </span>
-  );
-  return (
-    <article>
-      {project.status && (
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-dim">
-          {project.status}
-        </span>
-      )}
-      <h3 className="mt-1 text-base font-medium leading-snug text-fg-strong">
-        {project.url ? (
-          <a
-            href={project.url}
-            target={isExternal ? "_blank" : undefined}
-            rel={isExternal ? "noreferrer" : undefined}
-            className="transition-colors hover:text-accent focus-visible:text-accent"
-          >
-            {Title}
-          </a>
-        ) : (
-          Title
-        )}
-      </h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted">{project.description}</p>
-      {project.tags && project.tags.length > 0 && (
-        <ul className="mt-4 flex flex-wrap gap-1.5">
-          {project.tags.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-        </ul>
-      )}
-    </article>
-  );
-}
+const iconMap: Record<ProjectIconKey, ReactNode> = {
+  pipeline: <PipelineIcon className="h-5 w-5" />,
+  grid: <GridIcon className="h-5 w-5" />,
+  pulse: <PulseIcon className="h-5 w-5" />,
+  terminal: <TerminalIcon className="h-5 w-5" />,
+  diamond: <DiamondIcon className="h-5 w-5" />,
+};
 
 export function Projects() {
   return (
     <Section id="projects" label="Projects">
-      <ol className="group/projects space-y-12">
-        {projects.map((project) => (
-          <li
-            key={project.title}
-            className="transition-opacity duration-200 lg:group-hover/projects:opacity-50 lg:hover:opacity-100"
-          >
-            <ProjectCard project={project} />
-          </li>
-        ))}
-      </ol>
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {projects.map((p) => {
+          const external = !!p.url?.startsWith("http");
+          return (
+            <li key={p.title}>
+              <Card
+                href={p.url}
+                external={external}
+                icon={iconMap[p.iconKey]}
+                label={p.status}
+                title={p.title}
+                description={p.description}
+              >
+                {p.tags && (
+                  <ul className="flex flex-wrap gap-1.5">
+                    {p.tags.map((t) => (
+                      <Tag key={t}>{t}</Tag>
+                    ))}
+                  </ul>
+                )}
+              </Card>
+            </li>
+          );
+        })}
+      </ul>
     </Section>
   );
 }

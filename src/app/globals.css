@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme inline {
   --color-bg: #0a0a0b;
@@ -47,4 +48,69 @@ a {
 a:focus-visible,
 button:focus-visible {
   outline-offset: 4px;
+}
+
+/* MDX post body styling */
+.post-prose {
+  --tw-prose-body: var(--color-fg);
+  --tw-prose-headings: var(--color-fg-strong);
+  --tw-prose-lead: var(--color-fg);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-fg-strong);
+  --tw-prose-counters: var(--color-dim);
+  --tw-prose-bullets: var(--color-dim);
+  --tw-prose-hr: var(--color-rule);
+  --tw-prose-quotes: var(--color-fg);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-code: var(--color-accent);
+  --tw-prose-pre-code: var(--color-fg);
+  --tw-prose-pre-bg: var(--color-surface);
+  --tw-prose-th-borders: var(--color-rule);
+  --tw-prose-td-borders: var(--color-rule);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.post-prose a {
+  text-decoration: underline;
+  text-decoration-color: var(--color-rule);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s ease;
+}
+.post-prose a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+.post-prose code {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.9em;
+}
+.post-prose :where(code):not(:where([class~="not-prose"] *))::before,
+.post-prose :where(code):not(:where([class~="not-prose"] *))::after {
+  content: "";
+}
+.post-prose code:not(pre code) {
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  background: var(--color-accent-soft);
+}
+
+.post-prose pre {
+  border: 1px solid var(--color-rule);
+}
+
+.post-prose h2 {
+  margin-top: 2.5em;
+  letter-spacing: -0.01em;
+}
+.post-prose h3 {
+  margin-top: 2em;
+  letter-spacing: -0.005em;
+}
+
+.post-prose strong {
+  font-weight: 600;
 }

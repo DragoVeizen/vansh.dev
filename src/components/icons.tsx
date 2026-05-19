@@ -50,3 +50,62 @@ export function ArrowOutIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+/* Geometric / retro icons (square caps, miter joins) */
+
+const geo = {
+  fill: "none" as const,
+  stroke: "currentColor",
+  strokeWidth: 1.6,
+  strokeLinecap: "square" as const,
+  strokeLinejoin: "miter" as const,
+};
+
+export function PipelineIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...geo} className={className} aria-hidden>
+      <rect x="3" y="4" width="18" height="6" />
+      <rect x="3" y="14" width="18" height="6" />
+      <line x1="7" y1="10" x2="7" y2="14" />
+      <line x1="12" y1="10" x2="12" y2="14" />
+      <line x1="17" y1="10" x2="17" y2="14" />
+    </svg>
+  );
+}
+
+export function GridIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...geo} className={className} aria-hidden>
+      <rect x="3" y="3" width="8" height="8" />
+      <rect x="13" y="3" width="8" height="8" />
+      <rect x="3" y="13" width="8" height="8" />
+      <rect x="13" y="13" width="8" height="8" />
+    </svg>
+  );
+}
+
+export function PulseIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...geo} className={className} aria-hidden>
+      <polyline points="2 12 6 12 8 5 11 19 14 9 16 12 22 12" />
+    </svg>
+  );
+}
+
+export function TerminalIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...geo} className={className} aria-hidden>
+      <rect x="2" y="4" width="20" height="16" />
+      <polyline points="6 10 9 12 6 14" />
+      <line x1="12" y1="14" x2="18" y2="14" />
+    </svg>
+  );
+}
+
+export function DiamondIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...geo} className={className} aria-hidden>
+      <polygon points="12 3 21 12 12 21 3 12" />
+    </svg>
+  );
+}
