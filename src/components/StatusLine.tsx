@@ -10,7 +10,8 @@ export function StatusLine() {
         />
         <span>
           <span className="text-muted">Currently · </span>
-          <span className="text-fg">{site.currentlyDoing}</span>
+          <span className="text-fg recruiter-only">{site.currentlyDoing}</span>
+          <span className="text-fg play-only">{site.play.currentlyDoing}</span>
         </span>
       </p>
       <p className="pl-4 text-dim">
