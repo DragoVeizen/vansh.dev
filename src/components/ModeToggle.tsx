@@ -4,17 +4,19 @@
 //
 // The ✦ button. Single client component for the whole feature.
 //
-// On click: flips mode, writes localStorage, updates URL via
-// history.replaceState (no history entry — back button stays clean).
+// State sync uses useSyncExternalStore:
+//   - getServerSnapshot returns "recruiter" — matches the data-mode="recruiter"
+//     fallback set in layout.tsx for SSR / no-JS, so server markup is consistent.
+//   - getSnapshot reads <html data-mode> on the client.
+//   - subscribe attaches a MutationObserver on <html>'s data-mode attribute,
+//     so if the attribute ever changes (it can only change from this very
+//     component, but the observer keeps the contract explicit), the snapshot
+//     is re-read and the component re-renders.
 //
-// Initial state: read once from <html data-mode> via the useState
-// initializer. The init script in <head> set the attribute pre-paint,
-// so this read is the same value the user is already seeing. We don't
-// use useEffect+setState here because React 19's
-// react-hooks/set-state-in-effect rule discourages it, and the
-// initializer pattern is functionally equivalent (one read, no flicker).
+// On click: we set the DOM attribute first (which fires the MutationObserver
+// → re-render), then write localStorage + update URL via history.replaceState.
 
-import { useState } from "react";
+import { useSyncExternalStore } from "react";
 import {
   MODE_QUERY_PARAM,
   MODE_STORAGE_KEY,
@@ -22,20 +24,35 @@ import {
   type Mode,
 } from "@/lib/mode";
 
-function readInitialMode(): Mode {
-  // Server: no DOM, default recruiter.
-  if (typeof document === "undefined") return "recruiter";
+function subscribe(onStoreChange: () => void): () => void {
+  if (typeof document === "undefined") return () => {};
+  const observer = new MutationObserver(onStoreChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-mode"],
+  });
+  return () => observer.disconnect();
+}
+
+function getSnapshot(): Mode {
   const v = document.documentElement.dataset.mode;
   return isValidMode(v) ? v : "recruiter";
 }
 
+function getServerSnapshot(): Mode {
+  return "recruiter";
+}
+
 export function ModeToggle() {
-  const [mode, setMode] = useState<Mode>(readInitialMode);
+  const mode = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   function flip() {
     const next: Mode = mode === "play" ? "recruiter" : "play";
 
+    // Setting the attribute triggers the MutationObserver in subscribe(),
+    // which causes useSyncExternalStore to re-read and re-render.
     document.documentElement.setAttribute("data-mode", next);
+
     try {
       localStorage.setItem(MODE_STORAGE_KEY, next);
     } catch {
@@ -50,8 +67,6 @@ export function ModeToggle() {
       url.searchParams.delete(MODE_QUERY_PARAM);
     }
     window.history.replaceState(null, "", url.toString());
-
-    setMode(next);
   }
 
   const isOn = mode === "play";
