@@ -1,7 +1,11 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@theme inline {
+/* Colors live in a non-inline @theme so Tailwind emits real CSS
+   variables (e.g. `bg-bg` becomes `background-color: var(--color-bg)`),
+   which means our :root[data-mode="play"] overrides retint the whole
+   site, not just rules that explicitly reference var(--color-accent). */
+@theme {
   --color-bg: #0a0a0b;
   --color-surface: #18181b;
   --color-rule: #27272a;
@@ -11,7 +15,12 @@
   --color-fg-strong: #fafafa;
   --color-accent: #f59e0b;
   --color-accent-soft: rgba(245, 158, 11, 0.15);
+}
 
+/* Fonts need @theme inline because the values contain other CSS
+   variables (var(--font-geist-sans)), and we don't want
+   var(var(--font-geist-sans)). */
+@theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: ui-serif, "New York", Georgia, serif;
