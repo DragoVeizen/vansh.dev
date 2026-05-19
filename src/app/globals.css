@@ -187,6 +187,18 @@ button:focus-visible {
   display: revert;
 }
 
+/* The sidebar in-page nav uses Tailwind's `hidden lg:block` to stay
+   off mobile. Tailwind's `.hidden` lives in @layer utilities and loses
+   the cascade fight against the unlayered `display: revert` above when
+   the visitor is in play mode. Re-hide the play nav on mobile so it
+   matches the recruiter nav's behavior. The selector is scoped to
+   `nav.play-only` so it doesn't affect dual-render text spans. */
+@media (max-width: 1023px) {
+  :root[data-mode="play"] nav.play-only {
+    display: none;
+  }
+}
+
 /* Hide recruiter-only nodes when in play mode. */
 :root[data-mode="play"] .recruiter-only {
   display: none;
