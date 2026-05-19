@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vansh.dev"),
+  metadataBase: new URL("https://vansh-dev-five.vercel.app"),
   title: {
     default: "Vansh Thakur — Full Stack Engineer",
     template: "%s · Vansh Thakur",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://vansh.dev",
+    url: "https://vansh-dev-five.vercel.app",
     siteName: "vansh.dev",
   },
   twitter: { card: "summary_large_image" },
