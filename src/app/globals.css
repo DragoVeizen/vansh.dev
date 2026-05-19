@@ -24,6 +24,19 @@
 :root[data-mode="play"] {
   --color-accent: #71d0a8;
   --color-accent-soft: rgba(113, 208, 168, 0.15);
+
+  /* Tint the whole neutral scale toward mint-teal so play mode
+     reads as a different room, not just a different accent.
+     Each value keeps roughly the same lightness as the recruiter
+     equivalent (#0a0a0b, #18181b, #27272a, etc.) but shifts the
+     hue into the green/cyan channel. */
+  --color-bg: #0a1410;
+  --color-surface: #142220;
+  --color-rule: #233530;
+  --color-dim: #6a8a82;
+  --color-muted: #95b3ac;
+  --color-fg: #d8e8e3;
+  --color-fg-strong: #f0faf6;
 }
 
 /* Smooth the accent shift when the user clicks ✦. We only transition
