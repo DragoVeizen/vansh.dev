@@ -8,8 +8,8 @@ export const site = {
   currentlyDoing: "Writing about rebuilding Hudle's payment pipeline without downtime.",
   email: "vansh@hudle.in",
   socials: {
-    github: "https://github.com/vansh-thakur",
-    linkedin: "https://www.linkedin.com/in/vansh-thakur",
+    github: "https://github.com/DragoVeizen",
+    linkedin: "https://www.linkedin.com/in/vanshthakur",
   },
 } as const;
 
