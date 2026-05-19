@@ -15,7 +15,7 @@ export const experience: ExperienceItem[] = [
     company: "Hudle",
     companyUrl: "https://hudle.in",
     description:
-      "Lead engineer on Hudle's payment infrastructure. Rebuilt the payment pipeline from a monolithic single-record model into a 9-table entity-split schema with rank-based refund ordering, rolled out behind a feature flag using dual-write and middleware-rebinding for zero downtime. Shipped insurance as a new revenue stream — a first-class payment entity backed by an async state machine with idempotent retries. Also built hudle.in, the company's primary acquisition surface, and an internal Laravel + ClickHouse analytics system that replaced our paid SaaS observability.",
+      "Working on Hudle's payment infrastructure. Rebuilt the payment pipeline from a monolithic single-record model into a 9-table entity-split schema with rank-based refund ordering, rolled out behind a feature flag using dual-write and middleware-rebinding for zero downtime. Shipped insurance as a new revenue stream — a first-class payment entity backed by an async state machine with idempotent retries and ~60 unit tests covering the transitions. Also built hudle.in, the company's primary acquisition surface, and an internal Laravel + ClickHouse analytics system that replaced our paid SaaS observability.",
     outcomes: [
       "9-table payment refactor delivered with zero downtime via dual-write + feature flag",
       "hudle.in drives 10K–20K weekly organic sessions and 500–750 weekly venue enquiries",

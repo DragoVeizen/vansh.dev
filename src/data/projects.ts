@@ -27,7 +27,7 @@ export const projects: ProjectItem[] = [
     status: "Live",
     url: "https://keylytics-web.onrender.com/",
     description:
-      "Keystroke telemetry analytics. Captures typing patterns and renders them as time-series heatmaps and pace charts. Side project, ongoing.",
+      "Keystroke telemetry analytics. A side project I started to understand how my own typing changes across sessions. TypeScript + React on the front, Python + FastAPI on the back.",
     tags: ["TypeScript", "React", "Python", "FastAPI"],
   },
 ];

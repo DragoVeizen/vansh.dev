@@ -16,12 +16,12 @@ export function About() {
           <a href="https://hudle.in" className={linkClass} target="_blank" rel="noreferrer">
             Hudle
           </a>
-          , India&rsquo;s largest sports venue booking platform, I led the rebuild of
-          our payment pipeline — splitting a monolithic single-record schema into
-          a 9-table entity model with rank-based refund ordering, rolled out
-          behind a feature flag with zero downtime. I shipped insurance as a new
-          revenue stream, rewrote our search pipeline on Elasticsearch, and built
-          our primary acquisition surface,{" "}
+          , India&rsquo;s largest sports venue booking platform, I rebuilt our
+          payment pipeline — splitting a monolithic single-record schema into a
+          9-table entity model with rank-based refund ordering, rolled out
+          behind a feature flag with zero downtime. I shipped insurance as a
+          new revenue stream, rewrote our search pipeline on Elasticsearch, and
+          built our primary acquisition surface,{" "}
           <a href="https://hudle.in" className={linkClass} target="_blank" rel="noreferrer">
             hudle.in
           </a>
