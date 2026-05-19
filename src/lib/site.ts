@@ -11,6 +11,18 @@ export const site = {
     github: "https://github.com/DragoVeizen",
     linkedin: "https://www.linkedin.com/in/vanshthakur",
   },
+  // Play-mode copy. Same person, off-duty voice. The Sidebar component
+  // dual-renders both variants and CSS hides the inactive one.
+  play: {
+    name: "vansh",
+    subtitle: "off-duty · Delhi",
+    tagline: "weird products, anecdotal solutions, and whatever I'm reading this week.",
+    currentlyDoing: 'rereading "Tidy First?"',
+    nav: [
+      { id: "about", label: "About" },
+      { id: "writing", label: "Notes" },
+    ] as const,
+  },
 } as const;
 
 export const nav = [
