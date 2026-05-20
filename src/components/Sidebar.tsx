@@ -1,6 +1,6 @@
 import { nav, site } from "@/lib/site";
 import { StatusLine } from "@/components/StatusLine";
-import { GitHubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
+import { GitHubIcon, LinkedInIcon, MailIcon, ResumeIcon } from "@/components/icons";
 
 export function Sidebar() {
   return (
@@ -106,6 +106,17 @@ export function Sidebar() {
               className="text-muted transition-colors hover:text-accent focus-visible:text-accent"
             >
               <LinkedInIcon className="h-5 w-5" />
+            </a>
+          </li>
+          <li className="recruiter-only">
+            <a
+              href="/resume.pdf"
+              aria-label="Résumé (PDF)"
+              target="_blank"
+              rel="noreferrer"
+              className="text-muted transition-colors hover:text-accent focus-visible:text-accent"
+            >
+              <ResumeIcon className="h-5 w-5" />
             </a>
           </li>
         </ul>
