@@ -213,3 +213,51 @@ button:focus-visible {
 :root[data-mode="play"] [data-post-category]:not([data-post-category="fun"]) {
   display: none;
 }
+
+/* -------------------------------------------------------------- */
+/* ✦ ModeToggle glyph animations.                                  */
+/* -------------------------------------------------------------- */
+
+@keyframes mode-toggle-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* The glyph is a child <span> inside the toggle button so we can
+   transform it independently of the button's focus ring and glow.
+   `transform-origin: 50% 55%` slightly offsets the pivot so the
+   4-point sparkle's optical center matches its geometric one. */
+.mode-toggle-glyph {
+  display: inline-block;
+  transition: transform 200ms ease-out;
+  transform-origin: 50% 55%;
+}
+
+button:hover .mode-toggle-glyph {
+  transform: scale(1.08) rotate(15deg);
+}
+
+button:active .mode-toggle-glyph {
+  transform: scale(0.92);
+  transition-duration: 100ms;
+}
+
+/* Play mode: slow continuous rotation. Pauses on hover so the
+   user can "grab" the glyph; releasing resumes the spin. */
+.mode-toggle-glyph--spin {
+  animation: mode-toggle-spin 12s linear infinite;
+}
+
+button:hover .mode-toggle-glyph--spin {
+  animation-play-state: paused;
+  transform: scale(1.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-toggle-glyph,
+  .mode-toggle-glyph--spin {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

@@ -85,7 +85,14 @@ export function ModeToggle() {
       ].join(" ")}
       style={{ fontFamily: "var(--font-serif)" }}
     >
-      <span aria-hidden>✦</span>
+      <span
+        aria-hidden
+        className={["mode-toggle-glyph", isOn ? "mode-toggle-glyph--spin" : ""]
+          .filter(Boolean)
+          .join(" ")}
+      >
+        ✦
+      </span>
     </button>
   );
 }
